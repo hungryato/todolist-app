@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import pool from './db.js';
@@ -10,10 +10,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/tasks', async (req, res) => {
+interface Task {
+    id: number;
+    title: string;
+    description?: string;
+    completed: boolean;
+    created_at: Date;
+}
+
+app.get('/tasks', async (req: Request, res: Response) => {
     try {
         const result = await pool.query('SELECT * FROM tasks');
-        res.json(result.rows);
+        res.json(result.rows as Task[]);
     } catch (error) {
         res.status(500).json({error: 'Database error'});
     }
