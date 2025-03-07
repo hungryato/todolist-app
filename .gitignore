@@ -15,10 +15,12 @@ yarn-error.log*
 
 # 환경 설정 파일
 .env
-.env.*
 .env.local
+.env.development
 .env.development.local
+.env.test
 .env.test.local
+.env.production
 .env.production.local
 
 # Docker 볼륨 데이터
