@@ -11,7 +11,7 @@ services:
       - backend
 
   backend:
-    build: ./backend
+    build: todolist-app
     ports:
       - "5001:5001"
     environment:
