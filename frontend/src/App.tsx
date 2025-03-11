@@ -1,57 +1,39 @@
-import React, {useState} from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import Header from './components/Header';
+import TodoList from './components/TodoList';
+import {Todo} from './types';
 
-const TodoList = () => {
-    const [tasks, setTasks] = useState([
-        {id: 1, title: '샘플 할일 1'},
-        {id: 2, title: '샘플 할일 2'},
-        {id: 3, title: '샘플 할일 3'}
-    ]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+const App: React.FC = () => {
+    const [todos, setTodos] = useState<Todo[]>([]);
+    const [selectedTodos, setSelectedTodos] = useState<number[]>([]);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-    const fetchTasks = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await fetch('/api/tasks');
-            if (!response.ok) {
-                throw new Error(`HTTP 오류: ${response.status}`);
-            }
-            const data = await response.json();
-            setTasks(data);
-        } catch (err) {
-            setError(`데이터 가져오기 실패: ${err.message}`);
-            console.error('에러 발생:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
+    // 여기에 필요한 로직 구현
 
     return (
-        <div>
-            <h1>Todo List</h1>
-            <button onClick={fetchTasks} disabled={loading}>
-                {loading ? '로딩 중...' : '백엔드에서 데이터 가져오기'}
-            </button>
-
-            {error && <div style={{color: 'red'}}>{error}</div>}
-
-            <ul>
-                {tasks.map(task => <li key={task.id}>{task.title}</li>)}
-            </ul>
+        <div className="min-h-screen bg-gray-100">
+            <div className="container mx-auto max-w-6xl">
+                <Header
+                    onAdd={() => {/* 추가 로직 */
+                    }}
+                    onDelete={() => {/* 삭제 로직 */
+                    }}
+                    onLogin={() => setIsLoggedIn(true)}
+                    onLogout={() => setIsLoggedIn(false)}
+                    isLoggedIn={isLoggedIn}
+                />
+                <main className="py-6">
+                    <TodoList
+                        todos={todos}
+                        selectedTodos={selectedTodos}
+                        onToggleTodo={(id) => {/* 토글 로직 */
+                        }}
+                        onSelectTodo={(id) => {/* 선택 로직 */
+                        }}
+                    />
+                </main>
+            </div>
         </div>
-    );
-};
-
-const App = () => {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<TodoList/>}/>
-                <Route path="*" element={<div>페이지를 찾을 수 없습니다.</div>}/>
-            </Routes>
-        </BrowserRouter>
     );
 };
 
