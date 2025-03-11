@@ -1,41 +1,37 @@
 import React from 'react';
-import {Todo} from '../types';
+import {Todo} from '@types';
 
 interface TodoCardProps {
     todo: Todo;
+    onDelete: (id: number) => void;
     onToggle: (id: number) => void;
-    onSelect: (id: number) => void;
-    isSelected: boolean;
 }
 
-const TodoCard: React.FC<TodoCardProps> = ({todo, onToggle, onSelect, isSelected}) => {
+export const TodoCard: React.FC<TodoCardProps> = ({todo, onDelete, onToggle}) => {
     return (
-        <div
-            className={`bg-white rounded-lg shadow-md p-4 cursor-pointer transition transform hover:-translate-y-1 hover:shadow-lg border-l-4 
-                ${isSelected ? 'bg-blue-50 ring-2 ring-blue-500' : ''} 
-                ${todo.completed ? 'border-l-green-500 opacity-80' : 'border-l-blue-600'}`}
-            onClick={() => onSelect(todo.id)}
-        >
-            <div className="flex justify-between items-center mb-2">
-                <h3 className={`font-medium text-gray-800 ${todo.completed ? 'line-through text-gray-500' : ''}`}>
-                    {todo.title}
-                </h3>
-                <input
-                    type="checkbox"
-                    checked={todo.completed}
-                    onChange={() => onToggle(todo.id)}
-                    onClick={(e) => e.stopPropagation()}
-                    className="w-5 h-5 accent-blue-600 cursor-pointer"
-                />
+        <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+            <div className="p-4">
+                <h3 className="text-lg font-medium text-gray-900 mb-2">{todo.title}</h3>
+                {todo.description && <p className="text-gray-600 mb-4">{todo.description}</p>}
+                <div className="flex justify-between items-center">
+                    <button
+                        onClick={() => onToggle(todo.id)}
+                        className={`px-3 py-1 rounded-full text-sm ${
+                            todo.completed
+                                ? 'bg-green-100 text-green-800'
+                                : 'bg-yellow-100 text-yellow-800'
+                        }`}
+                    >
+                        {todo.completed ? '완료' : '진행 중'}
+                    </button>
+                    <button
+                        onClick={() => onDelete(todo.id)}
+                        className="text-red-500 hover:text-red-700"
+                    >
+                        삭제
+                    </button>
+                </div>
             </div>
-            {todo.description &&
-                <p className="text-gray-600 text-sm my-2">{todo.description}</p>
-            }
-            <p className="text-gray-500 text-xs mt-4 italic">
-                생성일: {new Date(todo.created_at).toLocaleDateString()}
-            </p>
         </div>
     );
 };
-
-export default TodoCard;

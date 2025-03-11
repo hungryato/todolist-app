@@ -1,39 +1,31 @@
 import React from 'react';
-import {Todo} from '../types';
-import TodoCard from './TodoCard';
+import {TodoCard, AddTodoCard} from '@components';
+import {Todo} from '@types';
 
 interface TodoListProps {
     todos: Todo[];
-    selectedTodos: number[];
+    onDeleteTodo: (id: number) => void;
     onToggleTodo: (id: number) => void;
-    onSelectTodo: (id: number) => void;
+    onAddTodo: (title: string, description?: string) => void;
 }
 
-const TodoList: React.FC<TodoListProps> = ({
-                                               todos,
-                                               selectedTodos,
-                                               onToggleTodo,
-                                               onSelectTodo
-                                           }) => {
+export const TodoList: React.FC<TodoListProps> = ({
+                                                      todos,
+                                                      onDeleteTodo,
+                                                      onToggleTodo,
+                                                      onAddTodo
+                                                  }) => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-5">
-            {todos.length === 0 ? (
-                <p className="col-span-full text-center p-10 text-gray-500 bg-gray-50 rounded-lg text-lg shadow-sm">
-                    할 일이 없습니다. 새로운 할 일을 추가해보세요!
-                </p>
-            ) : (
-                todos.map(todo => (
-                    <TodoCard
-                        key={todo.id}
-                        todo={todo}
-                        onToggle={onToggleTodo}
-                        onSelect={onSelectTodo}
-                        isSelected={selectedTodos.includes(todo.id)}
-                    />
-                ))
-            )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {todos.map(todo => (
+                <TodoCard
+                    key={todo.id}
+                    todo={todo}
+                    onDelete={onDeleteTodo}
+                    onToggle={onToggleTodo}
+                />
+            ))}
+            <AddTodoCard onAddTodo={onAddTodo}/>
         </div>
     );
 };
-
-export default TodoList;

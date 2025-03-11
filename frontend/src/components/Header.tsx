@@ -1,40 +1,21 @@
-import React from 'react'
+import React from 'react';
 
 interface HeaderProps {
-    onAdd: () => void;
-    onDelete: () => void;
-    onLogin: () => void;
-    onLogout: () => void;
-    isLoggedIn: boolean;
+    // 로그인/로그아웃 관련 props 제거
 }
 
-const Header: React.FC<HeaderProps> = ({onAdd, onDelete, onLogin, onLogout, isLoggedIn}) => {
+export const Header: React.FC<HeaderProps> = () => {
     return (
-        <header className="flex justify-between items-center p-4 bg-gray-50 shadow">
-            <div>
-                <h1 className="text-2xl font-bold text-gray-800">Todo List</h1>
-            </div>
-            <div className="flex gap-2">
-                <button
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-                    onClick={onAdd}>추가
+        <header className="bg-white shadow">
+            <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
+                <h1 className="text-xl font-bold text-gray-900">Todo App</h1>
+                <button className="p-2 rounded-md hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
                 </button>
-                <button
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-                    onClick={onDelete}>삭제
-                </button>
-                {isLoggedIn ? (
-                    <button
-                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-                        onClick={onLogout}>로그아웃</button>
-                ) : (
-                    <button
-                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-                        onClick={onLogin}>로그인</button>
-                )}
             </div>
         </header>
     );
 };
-
-export default Header;
