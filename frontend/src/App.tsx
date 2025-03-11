@@ -1,11 +1,15 @@
 import React, {useState} from 'react';
-import {Header, TodoList} from '@components';
+import {Sidebar, TodoList} from '@components';
 import {Todo} from '@types';
 import {sampleTodos} from './data/sampleTodos';
 
 const App: React.FC = () => {
     const [todos, setTodos] = useState<Todo[]>(sampleTodos);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const handleToggleSidebar = (isOpen: boolean) => {
+        setIsSidebarOpen(isOpen);
+    };
 
     const handleDeleteTodo = (id: number) => {
         setTodos(todos.filter(todo => todo.id !== id));
@@ -30,19 +34,21 @@ const App: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <Header
-                onLogin={() => setIsLoggedIn(true)}
-                onLogout={() => setIsLoggedIn(false)}
-                isLoggedIn={isLoggedIn}
-            />
-            <main className="max-w-7xl mx-auto px-4 py-6 w-full">
-                <TodoList
-                    todos={todos}
-                    onDeleteTodo={handleDeleteTodo}
-                    onToggleTodo={handleToggleTodo}
-                    onAddTodo={handleAddTodo}
-                />
-            </main>
+            <Sidebar onToggle={handleToggleSidebar}/>
+            <div
+                className={`transition-all duration-300 ${
+                    isSidebarOpen ? 'ml-64' : 'ml-0'
+                } min-h-screen flex justify-center`}
+            >
+                <main className="w-full max-w-6xl px-4 pt-16">
+                    <TodoList
+                        todos={todos}
+                        onDeleteTodo={handleDeleteTodo}
+                        onToggleTodo={handleToggleTodo}
+                        onAddTodo={handleAddTodo}
+                    />
+                </main>
+            </div>
         </div>
     );
 };

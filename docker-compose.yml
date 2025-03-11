@@ -6,6 +6,7 @@ services:
     environment:
       - VITE_API_URL=http://backend:5001
     volumes:
+      - ./frontend:/app
       - frontend-node-modules:/app/node_modules
     depends_on:
       - todo-service
@@ -21,6 +22,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     volumes:
+      - ./todo-service:/app
       - todo-service-node-modules:/app/node_modules
       - todo-service-dist:/app/dist
     depends_on:

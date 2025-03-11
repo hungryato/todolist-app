@@ -17,6 +17,7 @@ export const TodoList: React.FC<TodoListProps> = ({
                                                   }) => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <AddTodoCard onAddTodo={onAddTodo}/>
             {todos.map(todo => (
                 <TodoCard
                     key={todo.id}
@@ -25,7 +26,6 @@ export const TodoList: React.FC<TodoListProps> = ({
                     onToggle={onToggleTodo}
                 />
             ))}
-            <AddTodoCard onAddTodo={onAddTodo}/>
         </div>
     );
 };
