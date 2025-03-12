@@ -1,13 +1,18 @@
 import React, {useState} from 'react';
 import {TodoPopup} from '@components';
-import {CARD_STYLES} from '@constants/styles.ts';
+import {CARD_STYLES} from '@constants/styles';
 
 interface AddTodoCardProps {
-    onAddTodo: (title: string, description?: string) => void;
+    onAddTodo: (title: string, description?: string, tags?: string[]) => void;
 }
 
 export const AddTodoCard: React.FC<AddTodoCardProps> = ({onAddTodo}) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const handleAddTodo = (title: string, description?: string, tags?: string[]) => {
+        onAddTodo(title, description, tags);
+        setIsPopupOpen(false);
+    };
 
     return (
         <>
@@ -21,7 +26,7 @@ export const AddTodoCard: React.FC<AddTodoCardProps> = ({onAddTodo}) => {
             <TodoPopup
                 isOpen={isPopupOpen}
                 onClose={() => setIsPopupOpen(false)}
-                onSubmit={onAddTodo}
+                onSubmit={handleAddTodo}
             />
         </>
     );
