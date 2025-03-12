@@ -1,5 +1,6 @@
 import React from 'react';
 import {Todo} from '@types';
+import {CARD_STYLES} from '@constants/styles.ts';
 
 interface TodoCardProps {
     todo: Todo;
@@ -9,24 +10,30 @@ interface TodoCardProps {
 
 export const TodoCard: React.FC<TodoCardProps> = ({todo, onDelete, onToggle}) => {
     return (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-            <div className="p-4">
-                <h3 className="text-lg font-medium text-gray-900 mb-2">{todo.title}</h3>
-                {todo.description && <p className="text-gray-600 mb-4">{todo.description}</p>}
-                <div className="flex justify-between items-center">
+        <div className={CARD_STYLES.container}>
+            <div className={`${CARD_STYLES.padding} flex flex-col h-full`}>
+                <div className="mb-2">
+                    <h3 className="text-lg font-semibold text-gray-800 truncate">{todo.title}</h3>
+                    {todo.description && (
+                        <p className="text-gray-600 text-sm line-clamp-3 mt-1">
+                            {todo.description}
+                        </p>
+                    )}
+                </div>
+                <div className="flex justify-between items-center mt-auto">
                     <button
                         onClick={() => onToggle(todo.id)}
-                        className={`px-3 py-1 rounded-full text-sm ${
+                        className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200 ${
                             todo.completed
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-yellow-100 text-yellow-800'
+                                ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
+                                : 'bg-amber-100 text-amber-800 hover:bg-amber-200'
                         }`}
                     >
                         {todo.completed ? '완료' : '진행 중'}
                     </button>
                     <button
                         onClick={() => onDelete(todo.id)}
-                        className="text-red-500 hover:text-red-700"
+                        className="text-red-500 hover:text-red-600 font-medium transition-colors duration-200 px-2 py-1.5"
                     >
                         삭제
                     </button>

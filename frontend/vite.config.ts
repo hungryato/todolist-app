@@ -22,7 +22,8 @@ export default defineConfig({
             '@assets': resolve(__dirname, './src/assets'),
             '@hooks': resolve(__dirname, './src/hooks'),
             '@services': resolve(__dirname, './src/services'),
-            '@utils': resolve(__dirname, './src/utils')
+            '@utils': resolve(__dirname, './src/utils'),
+            '@constants': resolve(__dirname, './src/constants'),
         }
     }
 });
