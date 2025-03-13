@@ -18,13 +18,15 @@ services:
     environment:
       - PORT=5001
       - DB_HOST=db
-      - DB_USER=${DB_USER}
+      - DB_PORT=5432
+      - DB_USERNAME=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
+      - DB_DATABASE=${DB_NAME}
     volumes:
       - ./todo-service:/app
       - todo-service-node-modules:/app/node_modules
-      - todo-service-dist:/app/dist
+      - /app/dist
+      - ./.env:/app/.env
     depends_on:
       - db
 
@@ -36,9 +38,9 @@ services:
       - POSTGRES_DB=${DB_NAME}
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   postgres-data:
   frontend-node-modules:
   todo-service-node-modules:
-  todo-service-dist:

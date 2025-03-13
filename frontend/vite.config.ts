@@ -18,12 +18,9 @@ export default defineConfig({
         alias: {
             '@': resolve(__dirname, './src'),
             '@components': resolve(__dirname, './src/components'),
-            '@types': resolve(__dirname, './src/types'),
-            '@assets': resolve(__dirname, './src/assets'),
-            '@hooks': resolve(__dirname, './src/hooks'),
-            '@services': resolve(__dirname, './src/services'),
-            '@utils': resolve(__dirname, './src/utils'),
             '@constants': resolve(__dirname, './src/constants'),
+            '@services': resolve(__dirname, './src/services'),
+            '@types': resolve(__dirname, './src/types'),
         }
     }
 });

@@ -6,7 +6,17 @@
     "esModuleInterop": true,
     "outDir": "./dist",
     "strict": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "baseUrl": "./src",
+    "paths": {
+        "@/*": ["*"],
+        "@controllers/*": ["controllers/*"],
+        "@models/*": ["models/*"],
+        "@routes/*": ["routes/*"],
+    },
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "src/**/*"
